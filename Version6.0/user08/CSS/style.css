@@ -19,5 +19,5 @@ li {
 }
 .headshot{
     border-radius: 99999px;
-    filter: grayscale(75s);
+    filter: grayscale(75%);
 }
