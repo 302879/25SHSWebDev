@@ -1,163 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--Version 7.0 
-    Name:  
-    Date Completed: 
--->
 
 <head>
     <title>Dynamic Webpage</title>
-
-    <!-- Meta data -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Introduction to JavaScript">
-
-    <!-- CSS -->
-    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.css">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Animate -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <!-- Custom -->
     <link rel="stylesheet" href="CSS/style.css">
-
-    <!-- JavaScript -->
-    <!-- These are needed to get the responsive menu to work -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-
     <style>
-       h1 onMouseover="alert('GO Sabers!');" value="Click Me!">Shakopee High School</h1>
+        .game-container {
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .game-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .game-description {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        .result {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .fade-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+            display: none;
+        }
+        #clickCounter {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
     </style>
-
 </head>
 
 <body>
     <script language="JavaScript">
+        // Feature 1: Random Background Color Change
+        function changeBackgroundColor() {
+            const colors = ["#ff6347", "#8a2be2", "#7fff00", "#d2691e", "#ff1493", "#00ced1"];
+            document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        }
 
-var startTime=new Date();
-var endTime=new Date();
-var startPressed=false;
-var bgChangeStarted=false;
-var maxWait=20;
-var timerID;
+        // Feature 2: Counter for Button Clicks
+        let clickCount = 0;
+        function incrementCounter() {
+            clickCount++;
+            document.getElementById('clickCounter').textContent = `Button clicked ${clickCount} times`;
+        }
 
-function startTest()
-{
- document.body.style.background=document.response.bgColorChange.options[document.response.bgColorChange.selectedIndex].text;
- bgChangeStarted=true;
- startTime=new Date();
-}
+        // Feature 3: Fade In/Out Text
+        function toggleTextFade() {
+            const fadeText = document.getElementById('fadeText');
+            if (fadeText.style.display === "none") {
+                fadeText.style.display = "block";
+                fadeText.classList.add('animate__animated', 'animate__fadeIn');
+                fadeText.classList.remove('animate__fadeOut');
+            } else {
+                fadeText.classList.add('animate__animated', 'animate__fadeOut');
+                fadeText.classList.remove('animate__fadeIn');
+                setTimeout(() => {
+                    fadeText.style.display = "none";
+                }, 1000);
+            }
+        }
+    </script>
 
-function remark(responseTime)
-{
- var responseString="";
- if (responseTime < 0.20)
- responseString="Well done!";
- if (responseTime >= 0.20 && responseTime < 0.30)
- responseString="Nice!";
- if (responseTime >=0.40 && responseTime < 0.50)
- responseString="Could be better...";
- if (responseTime >=0.50 && responseTime < 0.80)
- responseString="Keep practicing!";
- if (responseTime >=0.80 && responseTime < 1.1)
- responseString="Have you been day dreaming again?";
- if (responseTime >=1.1)
- responseString="Did you fall asleep?";
- return responseString;
-}
-
-function stopTest()
-{
- if(bgChangeStarted)
- {
- endTime=new Date();
- var responseTime=(endTime.getTime()-startTime.getTime())/1000;
-
- document.body.style.background="white"; 
- alert("Your response time is: " + responseTime + " seconds " + "\n" + remark(responseTime));
- startPressed=false;
- bgChangeStarted=false;
- }
- else
- {
- if (!startPressed)
- {
- alert("press start first to start test");
- }
- else
- { 
- clearTimeout(timerID);
- startPressed=false; 
- alert("cheater! you pressed too early!");
- } 
- }
-}
-
-var randMULTIPLIER=0x015a4e35;
-var randINCREMENT=1;
-var today=new Date();
-var randSeed=today.getSeconds();
-
-function randNumber()
-{
- randSeed = (randMULTIPLIER * randSeed + randINCREMENT) % (1 << 31);
- return((randSeed >> 15) & 0x7fff) / 32767;
-}
-
-function startit()
-{
- if(startPressed)
- {
- alert("Already started. Press stop to stop");
- return;
- }
- else
- {
- startPressed=true; 
- timerID=setTimeout('startTest()', 6000*randNumber());
- }
-}
-
-</script>
-<p>Test your Response time!</p>
-Click on "Start" first, and wait until the background color changes. As soon as it changes, hit "stop!"
-
-<form name="response">
-Change background color in: 
-<select name="bgColorChange">
-<option selected>deeppink
-<option>aliceblue
-<option>crimson
-<option>darkkhaki
-<option>cadetblue
-<option>darkorchid
-<option>coral
-</select>
-<input type="button" value="start" onClick="startit()">
-<input type="button" value="stop" onClick="stopTest()">
-</form>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div class="container-fluid">
             <a href="http://shakonet.isd720.com" class="navbar-brand">WebDev</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav me-auto">
-                    <!--↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ Edit These Items in your NavBar ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓-->
                     <li class="nav-item">
                         <a href="#" class="nav-link active">Home</a>
                     </li>
                     <li class="nav-item">
                         <a href="games.html" class="nav-link">Games</a>
                     </li>
-                    <!--↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ Edit These Items in your NavBar ↑↑↑↑↑↑↑↑↑↑↑↑↑↑-->
                 </ul>
                 <form class="d-flex">
                     <button class="btn btn-primary" type="button">Login</button>
@@ -167,184 +104,93 @@ Change background color in:
     </nav>
 
     <main class="container-fluid mt-3">
-        <div id="built-in-functions">
-            <!-- ALERT-->
-            <script>
-                alert('Go Sabers!');
-            </script>
-            <!--PRINT-->
-            <script>
-                function printWindow() {
-                    window.print();
-                }
-            </script>
-            <!--LENGTH-->
-            <script>
-                function getLength() {
-                    document.getElementById("length").innerHTML = document.title.length;
-                }
-            </script>
-            <!-- FOCUS-->
-            <script>
-                function getFocus() {
-                    document.getElementById("focusButton").focus();
-                }
-            </script>
-            <!-- CLICK-->
-            <script>
-                function clickSimulation() {
-                    document.getElementById("Check").click();
-                }
-            </script>
-            <script>
-                function getDate() {
-                    document.getElementById("date").innerHTML = Date();
-                }
-            </script>
+        <div id="games">
+            <div class="container mt-5 game-container">
+                <div class="game-title">Game 1: Guess the Number</div>
+                <div class="game-description">Guess the number between 1 and 100!</div>
+                <input type="number" id="guessInput" class="form-control mb-3" placeholder="Enter a number between 1 and 100">
+                <button id="guessButton" class="btn btn-warning">Guess</button>
+                <p id="guessResult" class="result"></p>
 
-            <div class="container-fluid mt-3 mb-3">
-                <div class="row">
-                    <!--PRINT-->
-                    <div class="col-md-1">
-                        <button class="btn btn-dark btn-md" value="print this page" onclick="printWindow()">Print this
-                            page</button>
-                    </div>
-                    <!--LENGTH-->
-                    <div class="col-md-3">
-                        <button class="btn btn-dark btn-md" onclick="getLength()">The title has this many
-                            characters</button>
-                    </div>
-                    <div class="col-md-1">
-                        <p id="length"></p>
-                    </div>
-                    <!--FOCUS-->
-                    <div class="col-md-1">
-                        <button class="btn btn-dark btn-md" onclick="getFocus()">Focus</button>
-                    </div>
-                    <!-- CLICK-->
-                    <div class="col-md-1">
-                        <form>
-                            <input type="checkbox" id="Check" onmouseover="clickSimulation()">
-                            <input type="checkbox" id="Check" onmouseover="clickSimulation()">
-                        </form>
-                    </div>
-                    <!--DATE-->
-                    <div class="col-md-1">
-                        <button class="btn btn-dark btn-md" onclick="getDate()">Get Date</button>
-                    </div>
-                    <div class="col-md-3">
-                        <p id="date"></p>
-                    </div>
+                <script>
+                    const guessButton = document.getElementById('guessButton');
+                    const guessInput = document.getElementById('guessInput');
+                    const guessResult = document.getElementById('guessResult');
+
+                    let randomNumber = Math.floor(Math.random() * 100) + 1;
+
+                    guessButton.onclick = function () {
+                        const userGuess = parseInt(guessInput.value);
+                        if (userGuess === randomNumber) {
+                            guessResult.textContent = 'Correct! You guessed the number!';
+                            guessResult.classList.add('text-success');
+                            guessResult.classList.remove('text-danger');
+                        } else if (userGuess < randomNumber) {
+                            guessResult.textContent = 'Too low! Try again.';
+                            guessResult.classList.add('text-danger');
+                            guessResult.classList.remove('text-success');
+                        } else if (userGuess > randomNumber) {
+                            guessResult.textContent = 'Too high! Try again.';
+                            guessResult.classList.add('text-danger');
+                            guessResult.classList.remove('text-success');
+                        }
+                    };
+                </script>
+            </div>
+
+            <div class="container mt-5 game-container">
+                <div class="game-title">Game 2: Rock, Paper, Scissors</div>
+                <div class="game-description">Choose Rock, Paper, or Scissors and play against the computer!</div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="playRPS('rock')">Rock</button>
+                    <button class="btn btn-secondary" onclick="playRPS('paper')">Paper</button>
+                    <button class="btn btn-success" onclick="playRPS('scissors')">Scissors</button>
                 </div>
+                <p id="rpsResult" class="result"></p>
+
+                <script>
+                    function playRPS(userChoice) {
+                        const choices = ['rock', 'paper', 'scissors'];
+                        const computerChoice = choices[Math.floor(Math.random() * 3)];
+
+                        let result = '';
+
+                        if (userChoice === computerChoice) {
+                            result = 'It\'s a draw!';
+                        } else if (
+                            (userChoice === 'rock' && computerChoice === 'scissors') ||
+                            (userChoice === 'paper' && computerChoice === 'rock') ||
+                            (userChoice === 'scissors' && computerChoice === 'paper')
+                        ) {
+                            result = `You win! Computer chose ${computerChoice}.`;
+                        } else {
+                            result = `You lose! Computer chose ${computerChoice}.`;
+                        }
+
+                        document.getElementById('rpsResult').textContent = result;
+                    }
+                </script>
             </div>
         </div>
-        <hr>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-5">
-                    <h1>Heading for a long list</h1>
-                    <ol id="nestedList">
-                        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-                        <li>Aliquam tincidunt mauris eu risus.</li>
-                        <li>Vestibulum auctor dapibus neque.
-                            <ol>
-                                <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-                                <li>Aliquam tincidunt mauris eu risus.
-                                    <ol>
-                                        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                                            <ol>
-                                                <li>Lorem ipsum dolor sit amet, consectetuer.</li>
-                                            </ol>
-                                        </li>
-                                        <li>Aliquam tincidunt mauris eu risus.</li>
-                                        <li>Vestibulum auctor dapibus neque.</li>
-                                    </ol>
-                                </li>
-                                <li>Vestibulum auctor dapibus neque.</li>
-                                <li>Aliquam tincidunt mauris eu risus.</li>
-                            </ol>
-                        </li>
-                        <li>Aliquam tincidunt mauris eu risus.</li>
-                        <li>Vestibulum auctor dapibus neque.</li>
-                    </ol>
 
-                </div>
-
-                <div class="col-md-2 text-center">
-                    <button class="btn btn-danger btn-lg mt-3 container" onclick="firstSelector()">Try it
-                        1</button>
-
-                    <button class="btn btn-info btn-lg mt-3 container" onclick="secondSelector()">Try it
-                        2</button>
-
-                    <button class="btn btn-secondary btn-lg mt-3 container" onclick="thirdSelector()">Try it
-                        3</button>
-
-                    <button class="btn btn-primary btn-lg mt-3 container" onclick="window.location.reload()">Try
-                        it
-                        4</button>
-                </div>
-
-                <div class="col-md-5" id="shoppingList">
-                    <h1>My shopping list</h1>
-
-                    <div>
-                        <label for="item">Enter a new item:</label>
-                        <input type="text" name="item" id="item">
-                        <button id="aggregating-list">Add item</button>
-                    </div>
-
-                    <ul>
-
-                    </ul>
-                </div>
-
-            </div>
+        <!-- Feature 1: Random Background Color -->
+        <div class="container mt-5">
+            <button class="btn btn-info" onclick="changeBackgroundColor()">Change Background Color</button>
         </div>
-        <script id="lists">
-            function firstSelector() {
-                document.querySelector("#nestedList>li").style.backgroundColor = "#dc3545";
-            }
 
-            function secondSelector() {
-                var x = document.querySelectorAll("#nestedList>li");
-                var i;
-                for (i = 0; i < x.length; i++) {
-                    x[i].style.backgroundColor = "#17a2b8";
-                }
-            }
+        <!-- Feature 2: Button Click Counter -->
+        <div class="container mt-5">
+            <button class="btn btn-primary" onclick="incrementCounter()">Click Me</button>
+            <p id="clickCounter">Button clicked 0 times</p>
+        </div>
 
-            function thirdSelector() {
-                document.querySelector("#nestedList ol li").style.backgroundColor = "#6c757d";
-            }
-        </script>
-        <script id="shopping">
-            const list = document.querySelector('#shoppingList');
-            const input = document.getElementById('item');
-            const button = document.getElementById('aggregating-list');
-
-            button.onclick = function() {
-                let myItem = input.value;
-                input.value = '';
-
-                const listItem = document.createElement('li');
-                const listText = document.createElement('span');
-                const listBtn = document.createElement('button');
-
-                listItem.appendChild(listText);
-                listText.textContent = myItem;
-                listItem.appendChild(listBtn);
-                listBtn.textContent = 'Delete';
-                list.appendChild(listItem);
-
-                listBtn.onclick = function(e) {
-                    list.removeChild(listItem);
-                }
-
-                input.focus();
-            }
-        </script>
+        <!-- Feature 3: Fade In/Out Text -->
+        <div class="container mt-5">
+            <button class="btn btn-success" onclick="toggleTextFade()">Toggle Text Fade</button>
+            <p id="fadeText" class="fade-text">This is some text that will fade in and out!</p>
+        </div>
     </main>
+
     <div id="container" style="height: 3000px; width: 1000px;">
         <a href="#"><button type="button" id="focusButton" style="margin-top: 3000px;">You focused on me!</button></a>
     </div>
