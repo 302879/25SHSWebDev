@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>JavaScript Examples</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="my-3">Simple JavaScript Examples</h1>
+        
+        <!-- 1. Change text on button click -->
+        <p id="textChange">Click the button to change my text.</p>
+        <button onclick="changeText()">Click me!</button>
+
+        <hr>
+
+        <!-- 2. Prompt and greet user -->
+        <button onclick="greetUser()">Say Hello!</button>
+        <p id="greeting"></p>
+
+        <hr>
+
+        <!-- 3. Display a random number -->
+        <button onclick="showRandomNumber()">Get a random number</button>
+        <p id="randomNumber"></p>
+
+        <hr>
+        
+        <!-- 5. Simple timer example -->
+        <button onclick="startTimer()">Start Timer</button>
+        <p id="timer">Timer: 0</p>
+
+        <hr>
+
+        <!-- 6. Check if number is even or odd -->
+        <button onclick="checkEvenOdd()">Check Even/Odd</button>
+        <p id="evenOddResult"></p>
+
+        <hr>
+
+        <!-- 7. Change background color -->
+        <button onclick="changeBackgroundColor()">Change Background Color</button>
+
+        <hr>
+
+        <!-- 8. Reverse a string -->
+        <button onclick="reverseString()">Reverse String</button>
+        <p id="reversedString"></p>
+
+        <hr>
+
+        <!-- 9. Simple Calculator (Add two numbers) -->
+        <button onclick="addNumbers()">Add Two Numbers</button>
+        <p id="calculatorResult"></p>
+
+    </div>
+
+    <script>
+        // 1. Change text on button click
+        function changeText() {
+            document.getElementById("textChange").innerText = "You clicked the button!";
+        }
+
+        // 2. Prompt user for name and greet them
+        function greetUser() {
+            let name = prompt("What's your name?");
+            if (name) {
+                document.getElementById("greeting").innerText = "Hello, " + name + "!";
+            } else {
+                document.getElementById("greeting").innerText = "Hello, guest!";
+            }
+        }
+
+        // 3. Display a random number
+        function showRandomNumber() {
+            let randomNum = Math.floor(Math.random() * 100) + 1;
+            document.getElementById("randomNumber").innerText = "Random number: " + randomNum;
+        }
+
+        // 5. Simple timer with setInterval
+        let timerCount = 0;
+        function startTimer() {
+            setInterval(function() {
+                timerCount++;
+                document.getElementById("timer").innerText = "Timer: " + timerCount;
+            }, 1000);
+        }
+
+        // 6. Check if a number is even or odd
+        function checkEvenOdd() {
+            let num = prompt("Enter a number:");
+            if (num % 2 === 0) {
+                document.getElementById("evenOddResult").innerText = "The number " + num + " is even.";
+            } else {
+                document.getElementById("evenOddResult").innerText = "The number " + num + " is odd.";
+            }
+        }
+
+        // 7. Change the background color
+        function changeBackgroundColor() {
+            document.body.style.backgroundColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+        }
+
+        // 8. Reverse a string
+        function reverseString() {
+            let str = prompt("Enter a string to reverse:");
+            let reversed = str.split("").reverse().join("");
+            document.getElementById("reversedString").innerText = "Reversed String: " + reversed;
+        }
+
+        // 9. Simple Calculator (Add two numbers)
+        function addNumbers() {
+            let num1 = prompt("Enter the first number:");
+            let num2 = prompt("Enter the second number:");
+            let sum = parseFloat(num1) + parseFloat(num2);
+            document.getElementById("calculatorResult").innerText = "The sum is: " + sum;
+        }
+    </script>
+</body>
+</html>
