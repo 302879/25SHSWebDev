@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>FAQ Page</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    dl dt {
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    dl dd {
+      margin-left: 20px;
+    }
+
+    #backToTop {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #333;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #toggleTheme {
+      margin-bottom: 20px;
+      padding: 8px 12px;
+      cursor: pointer;
+      border: none;
+      background-color: #555;
+      color: white;
+      border-radius: 4px;
+    }
+
+    .dark-mode {
+      background-color: #222;
+      color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+
+<button id="toggleTheme">Toggle Dark Mode</button>
+
+<dl>
+  <dt>What are your hours?</dt>
+  <dd class="hide">We are open 24/7.</dd>
+
+  <dt>Where are you located?</dt>
+  <dd class="hide">We have locations worldwide.</dd>
+
+  <dt>Do you offer support?</dt>
+  <dd class="hide">Yes, we offer 24/7 customer support.</dd>
+
+  <dt>How can I contact you?</dt>
+  <dd class="hide">Email us at support@example.com</dd>
+
+  <dt>Do you have a return policy?</dt>
+  <dd class="hide">Yes, returns are accepted within 30 days.</dd>
+</dl>
+
+<div id="backToTop">Back to Top</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+$(function() {
+  // FAQ slide toggle
+  $('dl').on('click', 'dt', function() {
+    $(this)
+      .next()
+      .slideToggle(200)
+      .siblings('dd')
+      .not($(this).next())
+      .slideUp(200);
+  });
+
+  // jQuery Feature #1: Back to Top button
+  $(window).scroll(function() {
+    if ($(this).scrollTop() > 100) {
+      $('#backToTop').fadeIn();
+    } else {
+      $('#backToTop').fadeOut();
+    }
+  });
+
+  $('#backToTop').click(function() {
+    $('html, body').animate({scrollTop: 0}, 600);
+    return false;
+  });
+
+  // jQuery Feature #2: Theme toggle
+  $('#toggleTheme').click(function() {
+    $('body').toggleClass('dark-mode');
+  });
+});
+</script>
+
+</body>
+</html>
